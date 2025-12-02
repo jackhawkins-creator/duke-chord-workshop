@@ -1,72 +1,75 @@
-import { login } from "../data/UserStateManager.js"
+import { login } from "../data/UserStateManager.js";
+import { settings } from "../data/Settings.js";
 
-const container = document.querySelector("#content")
+const container = document.querySelector("#content");
 const formState = {
-    name: "",
-    email: ""
-}
+  name: "",
+  email: "",
+};
 
-container.addEventListener("click", clickEvent => {
-    if (clickEvent.target.id === "register") {
-        return fetch(`${settings.apiURL}/api/users`, {
-            method: "POST",
-            headers: {
-               "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formState)
-        })
-            .then(response => response.json())
-            .then((newUser) => {
-                login(newUser)
-            })
+container.addEventListener("click", (clickEvent) => {
+  if (clickEvent.target.id === "register") {
+    return fetch(`${settings.apiURL}/api/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formState),
+    })
+      .then((response) => response.json())
+      .then((newUser) => {
+        login(newUser);
 
+        // 🔥 Navigate to homepage without reload
+        history.pushState(null, "view", `?view=home`);
+        window.dispatchEvent(
+          new PopStateEvent("popstate", { state: { view: "home" } })
+        );
+      });
+  }
+});
+
+container.addEventListener("keyup", (evt) => {
+  if (evt.target.classList.contains("register__input")) {
+    const type = evt.target.type;
+    let value = null;
+
+    switch (type) {
+      case "select-one":
+      case "number":
+        value = parseInt(evt.target.value);
+        break;
+
+      case "text":
+        value = evt.target.value;
+        break;
+
+      case "checkbox":
+        value = evt.target.checked;
+        break;
+
+      default:
+        break;
     }
-})
 
-content.addEventListener("keyup", evt => {
-    if (evt.target.classList.contains("register__input")) {
-        const type = evt.target.type
-        let value = null
+    formState[evt.target.id] = value;
+    console.log(formState);
+  }
+});
 
-        switch (type) {
-            case "select-one":
-            case "number":
-                value = parseInt(evt.target.value)
-                break;
-
-            case "text":
-                value = evt.target.value
-                break;
-
-            case "checkbox":
-                value = evt.target.checked
-                break;
-
-            default:
-                break;
-        }
-
-
-        formState[evt.target.id] = value
-        console.log(formState)
-    }
-})
-
-container.addEventListener(
-    "click",
-    (event) => {
-        if (event.target.id === "loginLink") {
-            event.preventDefault()
-            history.pushState(null, "view", `?view=login`)
-            var popStateEvent = new PopStateEvent('popstate', { state: { view: "login" } })
-            window.dispatchEvent(popStateEvent)
-        }
-    }
-)
-
+container.addEventListener("click", (event) => {
+  if (event.target.id === "loginLink") {
+    event.preventDefault();
+    history.pushState(null, "view", `?view=login`);
+    var popStateEvent = new PopStateEvent("popstate", {
+      state: { view: "login" },
+    });
+    window.dispatchEvent(popStateEvent);
+  }
+});
 
 export const RegisterForm = () => {
-    return `
+  return `
         <div class="loginForm">
             <input class="register__input" value="${formState.name}" type="text" id="name" autofocus placeholder="Your name" />
             <input class="register__input" value="${formState.email}" type="text" id="email" placeholder="Email address" />
@@ -77,5 +80,5 @@ export const RegisterForm = () => {
             <a id="loginLink" href="">Already a member?</a>
         </section>
 
-    `
-}
+    `;
+};

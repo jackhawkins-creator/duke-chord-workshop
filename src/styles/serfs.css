@@ -76,3 +76,47 @@
     font-size: 1.3rem;
     margin: 2rem 10%;
 }
+
+/* ===========================
+   Responsive Staff Layout
+   =========================== */
+
+/* 0–780px → 2 columns, email = 0.9rem */
+@media (max-width: 780px) {
+    .serf {
+        flex-basis: 45%; /* 2 columns */
+    }
+    .serf__email {
+        font-size: 0.9rem;
+    }
+}
+
+/* 781–900px → 2 columns, email = 1.1rem */
+@media (min-width: 781px) and (max-width: 900px) {
+    .serf {
+        flex-basis: 45%;
+    }
+    .serf__email {
+        font-size: 1.1rem;
+    }
+}
+
+/* 901–1380px → 3 columns, email = 1.25rem */
+@media (min-width: 901px) and (max-width: 1380px) {
+    .serf {
+        flex-basis: 30%; /* 3 columns */
+    }
+    .serf__email {
+        font-size: 1.25rem;
+    }
+}
+
+/* 1381px+ → 4 columns, email = 1.25rem */
+@media (min-width: 1381px) {
+    .serf {
+        flex-basis: 22%; /* 4 columns */
+    }
+    .serf__email {
+        font-size: 1.25rem;
+    }
+}
