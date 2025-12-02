@@ -9,7 +9,7 @@ let audio = null
 container.addEventListener(
     "click",
     (pointerEvent) => {
-        const instrumentClicked = pointerEvent.path.find(element => element.classList?.contains("instrument"))
+        const instrumentClicked = pointerEvent.target.closest(".instrument")
         if (instrumentClicked) {
             const [, id] = pointerEvent.target.id.split("--")
             changeView(`instrument&instrumentId=${id}`)
