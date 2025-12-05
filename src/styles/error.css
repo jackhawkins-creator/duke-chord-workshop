@@ -1,0 +1,18 @@
+.error {
+text-align: center;
+margin: 3rem auto;
+padding: 2rem;
+border: 2px solid #ff4c4c;
+background-color: #ffe5e5;
+border-radius: 10px;
+max-width: 600px;
+}
+
+.error h2 {
+color: #ff1a1a;
+margin-bottom: 1rem;
+}
+
+.error p {
+color: #800000;
+}
